@@ -1,0 +1,35 @@
+<section class="w-full">
+  <div class="container px-4 w-full mx-auto">
+    <form class="w-full max-w-96 mx-auto" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <fieldset class="fieldset w-full">
+        <legend class="fieldset-legend">Email</legend>
+        <input type="email" name="email" id="email" class="input w-full" placeholder="Type here" formControlName="email" />
+        <p class="fieldset-label">Required</p>
+      </fieldset>
+      <fieldset class="fieldset w-full">
+        <legend class="fieldset-legend">Name</legend>
+        <input type="text" name="name" id="name" class="input w-full" placeholder="Type here" formControlName="name" />
+        <p class="fieldset-label">Required</p>
+      </fieldset>
+      <fieldset class="fieldset w-full">
+        <legend class="fieldset-legend">Document</legend>
+        <input type="text" name="document" id="document" class="input w-full" placeholder="111.111.111-11 or 11.111.111/1111-11" formControlName="document"  />
+        <p class="fieldset-label">Required</p>
+      </fieldset>
+      <fieldset class="fieldset w-full">
+        <legend class="fieldset-legend">Password</legend>
+        <input type="password" name="password" id="password" class="input w-full" placeholder="Type here" formControlName="password"/>
+        <p class="fieldset-label">Required</p>
+      </fieldset>
+
+      <a
+        class="link text-center my-4 block"
+        routerLink="/login"
+      >
+        Already have an account? go to the login page
+      </a>
+
+      <button class="btn btn-soft" [disabled]="!registerForm.valid">register</button>
+    </form>
+  </div>
+</section>
