@@ -1,7 +1,4 @@
-import type {
-	ValidationErrors,
-	ValidatorFn,
-} from "@angular/forms";
+import type { ValidationErrors, ValidatorFn } from "@angular/forms";
 import { STRONG_PASSWORD_REGEX } from "../constants";
 
 export function passwordValidator(): ValidatorFn {

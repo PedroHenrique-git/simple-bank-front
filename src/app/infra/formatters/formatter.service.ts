@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { documentFormatter } from "./document-formatter";
+import { documentFormatter } from "./document.formatter";
 
 @Injectable({
 	providedIn: "root",

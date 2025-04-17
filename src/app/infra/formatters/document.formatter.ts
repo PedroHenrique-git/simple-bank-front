@@ -1,7 +1,4 @@
-import {
-	formatCNPJ,
-	formatCPF,
-} from "@brazilian-utils/brazilian-utils";
+import { formatCNPJ, formatCPF } from "@brazilian-utils/brazilian-utils";
 import { CPF_LENGTH } from "../constants";
 
 export function documentFormatter(document: string) {

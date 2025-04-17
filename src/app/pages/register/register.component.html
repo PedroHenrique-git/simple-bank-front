@@ -3,33 +3,33 @@
     <form class="w-full max-w-96 mx-auto" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
       <fieldset class="fieldset w-full">
         <legend class="fieldset-legend">Email</legend>
-        <input type="email" name="email" id="email" class="input w-full" placeholder="Type here" formControlName="email" />
+        <input [ngClass]="customClasses.email" type="email" name="email" id="email" class="input w-full" placeholder="Type here" formControlName="email" />
 
-        @if (!email.valid && (email.dirty && email.touched)) {
+        @if (hasEmailErrors) {
           <p class="text-xs text-error">Invalid email</p>
         }
       </fieldset>
       <fieldset class="fieldset w-full">
         <legend class="fieldset-legend">Name</legend>
-        <input type="text" name="name" id="name" class="input w-full" placeholder="Type here" formControlName="name" />
+        <input [ngClass]="customClasses.name" type="text" name="name" id="name" class="input w-full" placeholder="Type here" formControlName="name" />
 
-        @if (!name.valid && (name.dirty && name.touched)) {
+        @if (hasNameErrors) {
           <p class="text-xs text-error">Invalid name</p>
         }
       </fieldset>
       <fieldset class="fieldset w-full">
         <legend class="fieldset-legend">Document</legend>
-        <input type="text" name="document" id="document" class="input w-full" placeholder="111.111.111-11 or 11.111.111/1111-11" minlength="14" maxlength="18" formControlName="document"/>
+        <input [ngClass]="customClasses.document"  type="text" name="document" id="document" class="input w-full" placeholder="111.111.111-11 or 11.111.111/1111-11" minlength="14" maxlength="18" formControlName="document"/>
 
-        @if (!document.valid && (document.dirty && document.touched)) {
+        @if (hasDocumentErrors) {
           <p class="text-xs text-error">{{ document.errors?.['message'] ?? 'Invalid document' }}</p>
         }
       </fieldset>
       <fieldset class="fieldset w-full">
         <legend class="fieldset-legend">Password</legend>
-        <input type="password" name="password" id="password" class="input w-full" placeholder="Type here" formControlName="password"/>
+        <input [ngClass]="customClasses.password"  type="password" name="password" id="password" class="input w-full" placeholder="Type here" formControlName="password"/>
 
-        @if (!password.valid && (password.dirty && password.touched)) {
+        @if (hasPasswordErrors) {
           <p class="text-xs text-error">{{ password.errors?.['message'] ?? 'Invalid password' }}</p>
         }
       </fieldset>
