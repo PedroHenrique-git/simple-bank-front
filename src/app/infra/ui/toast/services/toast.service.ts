@@ -1,4 +1,5 @@
 import { Injectable, signal } from "@angular/core";
+import { timer } from "rxjs";
 
 type Type = "alert-info" | "alert-success" | "alert-warning" | "alert-error";
 
@@ -36,8 +37,8 @@ export class ToastService {
 			},
 		]);
 
-		setTimeout(() => {
+		timer(duration).subscribe(() => {
 			this._toasts.update((toasts) => toasts.filter((t) => t.id !== id));
-		}, duration);
+		});
 	}
 }

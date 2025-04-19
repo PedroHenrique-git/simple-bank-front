@@ -1,4 +1,5 @@
 import { NgClass } from "@angular/common";
+import type { HttpErrorResponse } from "@angular/common/http";
 import { Component, type OnInit, inject } from "@angular/core";
 import {
 	type AbstractControl,
@@ -9,6 +10,7 @@ import {
 	Validators,
 } from "@angular/forms";
 import { Router, RouterLink } from "@angular/router";
+import { catchError, of } from "rxjs";
 import { FormatterService } from "../../infra/formatters/formatter.service";
 import { ToastService } from "../../infra/ui/toast/services/toast.service";
 import { documentValidator } from "../../infra/validators/document.validator";
@@ -114,15 +116,19 @@ export class RegisterComponent implements OnInit {
 				name: this.name.value,
 				password: this.password.value,
 			})
-			.subscribe((payload) => {
-				if (payload.success) {
+			.pipe(
+				catchError((err: HttpErrorResponse) => {
 					this.toastService.showToast({
-						message: "Your registration has been created successfully!!!",
-						type: "alert-success",
+						type: "alert-error",
+						message:
+							err?.error?.message ?? "Something went wrong, try again later",
 					});
 
-					this.router.navigateByUrl("/");
-
+					return of(null);
+				}),
+			)
+			.subscribe((payload) => {
+				if (!payload?.success) {
 					return;
 				}
 
@@ -130,8 +136,10 @@ export class RegisterComponent implements OnInit {
 
 				this.toastService.showToast({
 					message,
-					type: "alert-error",
+					type: "alert-success",
 				});
+
+				this.router.navigateByUrl("/");
 			});
 	}
 

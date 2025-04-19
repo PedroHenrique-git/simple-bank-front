@@ -1,9 +1,11 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable, inject, signal } from "@angular/core";
+import { catchError, of } from "rxjs";
 import { environment } from "../../../../environments/environment";
 import type { ServiceResponse } from "../../../infra/types/service.response";
 import type { AuthDTORequest } from "./auth.dto.request";
 import type { AuthDTOResponse } from "./auth.dto.response";
+import type { AuthRefreshTokenDTOResponse } from "./auth.refresh-token.dto.response";
 
 type Nullable<T> = T | null;
 
@@ -18,6 +20,26 @@ export class AuthService {
 			dto,
 			{ withCredentials: true },
 		);
+	}
+
+	refreshToken() {
+		return this.http.post<ServiceResponse<AuthRefreshTokenDTOResponse>>(
+			`${environment.apiUrl}/api/v1/auth/refresh-token`,
+			null,
+			{ withCredentials: true },
+		);
+	}
+
+	refreshOnInit() {
+		this.refreshToken()
+			.pipe(catchError(() => of(null)))
+			.subscribe((payload) => {
+				if (!payload?.success) {
+					return;
+				}
+
+				this.authToken = payload.data.authToken;
+			});
 	}
 
 	get isAuthenticated() {

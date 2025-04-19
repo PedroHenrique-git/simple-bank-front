@@ -1,4 +1,5 @@
 import { NgClass } from "@angular/common";
+import type { HttpErrorResponse } from "@angular/common/http";
 import { Component, type OnInit, inject } from "@angular/core";
 import {
 	type AbstractControl,
@@ -9,6 +10,7 @@ import {
 	Validators,
 } from "@angular/forms";
 import { Router, RouterLink } from "@angular/router";
+import { catchError, of } from "rxjs";
 import { ToastService } from "../../infra/ui/toast/services/toast.service";
 import { AuthService } from "./services/auth.service";
 
@@ -71,23 +73,31 @@ export class AuthComponent implements OnInit {
 				email: this.email.value,
 				password: this.password.value,
 			})
-			.subscribe((payload) => {
-				if (!payload.success) {
+			.pipe(
+				catchError((err: HttpErrorResponse) => {
 					this.toastService.showToast({
-						message: "Something went wrong, try again later!",
+						type: "alert-error",
+						message:
+							err?.error?.message ?? "Something went wrong, try again later",
 					});
 
+					return of(null);
+				}),
+			)
+			.subscribe((payload) => {
+				if (!payload?.success) {
 					return;
 				}
 
 				const {
+					message,
 					data: { authToken },
 				} = payload;
 
 				this.authService.authToken = authToken;
 
 				this.toastService.showToast({
-					message: "Login successfully",
+					message,
 					type: "alert-success",
 				});
 
