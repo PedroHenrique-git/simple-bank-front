@@ -1,0 +1,7 @@
+<div class="toast {{xPosition}} {{yPosition}}">
+  @for (toast of toasts; track toast.id) {
+    <div class="alert text-base text-white" [ngClass]="toast.classes">
+      <span>{{ toast.message }}</span>
+    </div>
+  }
+</div>

@@ -1,11 +1,14 @@
-import { Component, Input } from "@angular/core";
-import { RouterLink, RouterOutlet } from "@angular/router";
+import { Component } from "@angular/core";
+import { RouterOutlet } from "@angular/router";
+import { FooterComponent } from "./infra/ui/footer/footer.component";
+import { HeaderComponent } from "./infra/ui/header/header.component";
+import { ToastComponent } from "./infra/ui/toast/toast.component";
+import { ToastProvider } from "./infra/ui/toast/toast.provider";
 
 @Component({
 	selector: "app-root",
-	imports: [RouterOutlet, RouterLink],
+	imports: [RouterOutlet, ToastComponent, HeaderComponent, FooterComponent],
+	providers: [ToastProvider],
 	templateUrl: "./app.component.html",
 })
-export class AppComponent {
-	@Input() date = new Date().getFullYear();
-}
+export class AppComponent {}

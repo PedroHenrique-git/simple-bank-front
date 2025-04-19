@@ -1,0 +1,31 @@
+<section class="w-full">
+  <div class="container px-4 w-full mx-auto">
+    <form class="w-full max-w-96 mx-auto" [formGroup]="authForm" (ngSubmit)="onSubmit()">
+      <fieldset class="fieldset w-full">
+        <legend class="fieldset-legend">Email</legend>
+        <input type="email" name="email" id="email" class="input w-full" placeholder="Type here" formControlName="email" [ngClass]="customClasses.email"/>
+
+        @if (hasEmailErrors) {
+          <p class="text-xs text-error">Invalid email</p>
+        }
+      </fieldset>
+      <fieldset class="fieldset w-full">
+        <legend class="fieldset-legend">Password</legend>
+        <input type="password" name="password" id="password" class="input w-full" placeholder="Type here" formControlName="password"  [ngClass]="customClasses.password"/>
+
+        @if (hasPasswordErrors) {
+          <p class="text-xs text-error">Invalid password</p>
+        }
+      </fieldset>
+
+      <a
+        class="link text-center my-4 block"
+        routerLink="/register"
+      >
+        Do not have an account? go to the register page
+      </a>
+
+      <button class="btn btn-soft" [disabled]="authForm.invalid">login</button>
+    </form>
+  </div>
+</section>

@@ -4,11 +4,16 @@ export const routes: Routes = [
 	{
 		path: "",
 		loadChildren: () =>
-			import("./pages/register/register.routes").then((mod) => mod.routes),
+			import("./modules/home/home.routes").then((mod) => mod.routes),
+	},
+	{
+		path: "register",
+		loadChildren: () =>
+			import("./modules/register/register.routes").then((mod) => mod.routes),
 	},
 	{
 		path: "login",
 		loadChildren: () =>
-			import("./pages/login/login.routes").then((mod) => mod.routes),
+			import("./modules/auth/auth.routes").then((mod) => mod.routes),
 	},
 ];

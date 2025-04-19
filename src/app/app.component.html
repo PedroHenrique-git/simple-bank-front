@@ -1,17 +1,9 @@
-<header class="w-full border-b border-gray-100 mb-8">
-  <div class="container p-4 w-full mx-auto">
-    <a routerLink="/">
-      <h1>Simple bank</h1>
-    </a>
-  </div>
-</header>
+<app-header></app-header>
 
 <main class="h-[100vh]">
   <router-outlet></router-outlet>
+  <app-toast></app-toast>
 </main>
 
-<footer class="w-full border-t border-gray-100 mt-8">
-  <div class="container p-4 w-full mx-auto">
-    <h1 class="text-center">&#64;Simple bank - {{ date }}</h1>
-  </div>
-</footer>
+<app-footer></app-footer>
+

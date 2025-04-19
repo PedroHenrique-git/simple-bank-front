@@ -8,8 +8,9 @@ import {
 	ReactiveFormsModule,
 	Validators,
 } from "@angular/forms";
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import { FormatterService } from "../../infra/formatters/formatter.service";
+import { ToastService } from "../../infra/ui/toast/services/toast.service";
 import { documentValidator } from "../../infra/validators/document.validator";
 import { passwordValidator } from "../../infra/validators/password.validator";
 import { RegisterService } from "./services/register.service";
@@ -23,7 +24,7 @@ interface RegisterForm {
 }
 
 @Component({
-	selector: "register-page",
+	selector: "app-register",
 	templateUrl: "./register.component.html",
 	providers: [RegisterProvider],
 	imports: [RouterLink, ReactiveFormsModule, NgClass],
@@ -31,6 +32,8 @@ interface RegisterForm {
 export class RegisterComponent implements OnInit {
 	private readonly formatterService = inject(FormatterService);
 	private readonly registerService = inject(RegisterService);
+	private readonly router = inject(Router);
+	private readonly toastService = inject(ToastService);
 
 	customClasses: Record<keyof RegisterForm, Record<string, boolean>> = {
 		name: {},
@@ -39,7 +42,7 @@ export class RegisterComponent implements OnInit {
 		email: {},
 	};
 
-	registerForm = new FormGroup<RegisterForm>({
+	registerForm: FormGroup<RegisterForm> = new FormGroup<RegisterForm>({
 		email: new FormControl("", {
 			nonNullable: true,
 			validators: [Validators.required, Validators.email],
@@ -111,8 +114,24 @@ export class RegisterComponent implements OnInit {
 				name: this.name.value,
 				password: this.password.value,
 			})
-			.subscribe((result) => {
-				console.log(result);
+			.subscribe((payload) => {
+				if (payload.success) {
+					this.toastService.showToast({
+						message: "Your registration has been created successfully!!!",
+						type: "alert-success",
+					});
+
+					this.router.navigateByUrl("/");
+
+					return;
+				}
+
+				const { message } = payload;
+
+				this.toastService.showToast({
+					message,
+					type: "alert-error",
+				});
 			});
 	}
 
